@@ -11,7 +11,7 @@ namespace SharedData.Models
     {
         public int Id { get; set; }
         public int Part { get; set; }
-        public int Content { get; set; }
+        public string Content { get; set; }
         public string Time { get; set; }
         public string Location { get; set; }
 

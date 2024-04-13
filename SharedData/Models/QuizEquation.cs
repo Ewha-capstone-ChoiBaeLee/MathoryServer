@@ -239,13 +239,9 @@ namespace SharedData.Models
 
         public static Tuple<string, string> Generate()
         {
-            var (equation, subject) = forth_grade();
+            var (equation, subject) = first_grade();
             Console.WriteLine($"Result: {equation}");
             Console.WriteLine($"Result: {subject}");
-
-            var result = forth_grade();
-            Console.WriteLine($"Result: {result.result}");
-            Console.WriteLine($"Subject: {result.subject}");
 
             return Tuple.Create(equation, subject);
         }

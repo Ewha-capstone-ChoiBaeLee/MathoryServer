@@ -11,7 +11,7 @@ using P_MathoryServer.Data;
 namespace P_MathoryServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240413030254_MathoryServer")]
+    [Migration("20240413032734_MathoryServer")]
     partial class MathoryServer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,8 +89,9 @@ namespace P_MathoryServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Content")
-                        .HasColumnType("int");
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()
