@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace SharedData.Models
 {
-    public class StoryLine
+    public class Story
     {
         [Key]
-        public int Num { get; set; }
-
         public int Part { get; set; }
-        public string Name { get; set; }
-        public string Story {  get; set; }
+
+        public int Content { get; set; }
+        public string Time { get; set; }
+        public string Location { get; set; }
+
     }
 }

@@ -44,11 +44,11 @@ namespace P_MathoryServer.Migrations
 
             modelBuilder.Entity("SharedData.Models.Quiz", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Part")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Part"), 1L, 1);
 
                     b.Property<string>("Answer")
                         .IsRequired()
@@ -58,32 +58,56 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Part")
-                        .HasColumnType("int");
+                    b.Property<double>("Num1")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Num2")
+                        .HasColumnType("float");
 
                     b.Property<string>("Problem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Part");
 
                     b.ToTable("Quiz");
                 });
 
-            modelBuilder.Entity("SharedData.Models.StoryLine", b =>
+            modelBuilder.Entity("SharedData.Models.Story", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Part")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Part"), 1L, 1);
+
+                    b.Property<int>("Content")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Part");
+
+                    b.ToTable("Story");
+                });
+
+            modelBuilder.Entity("SharedData.Models.StoryLine", b =>
+                {
+                    b.Property<int>("Num")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Num"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Num")
-                        .HasColumnType("int");
 
                     b.Property<int>("Part")
                         .HasColumnType("int");
@@ -92,7 +116,7 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Num");
 
                     b.ToTable("StoryLine");
                 });

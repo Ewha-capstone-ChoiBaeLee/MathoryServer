@@ -19,7 +19,7 @@ namespace P_MathoryServer.Controllers
         // CREATE
 
         // READ
-        [HttpGet]
+        /*[HttpGet]
         public List<Quiz> GetQuiz()
         {
             List<Quiz> results = _context.Quiz
@@ -37,7 +37,7 @@ namespace P_MathoryServer.Controllers
                 .FirstOrDefault();
 
             return result;
-        }
+        }*/
 
         // UPDATE
 

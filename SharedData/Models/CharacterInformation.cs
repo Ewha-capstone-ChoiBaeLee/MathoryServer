@@ -9,8 +9,9 @@ namespace SharedData.Models
 {
     public class CharacterInformation
     {
-        [Key]
+        [Key] 
         public int CharacterId { get; set; }
+
         public string CharacterName { get; set; }
         public string CharacterPersonality { get; set; }
     }

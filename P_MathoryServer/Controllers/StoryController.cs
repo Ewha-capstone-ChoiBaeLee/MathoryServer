@@ -19,7 +19,7 @@ namespace P_MathoryServer.Controllers
         // CREATE
 
         // READ
-        [HttpGet]
+        /*[HttpGet]
         public List<StoryLine> GetStoryLine()
         {
             List<StoryLine> results = _context.StoryLine
@@ -37,7 +37,7 @@ namespace P_MathoryServer.Controllers
                 .FirstOrDefault();
 
             return result;
-        }
+        }*/
 
         // UPDATE
 

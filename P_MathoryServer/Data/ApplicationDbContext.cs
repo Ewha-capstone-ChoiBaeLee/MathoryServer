@@ -9,6 +9,7 @@ namespace P_MathoryServer.Data
         public DbSet<CharacterInformation> CharacterInformation { get; set; }
         public DbSet<StoryLine> StoryLine { get; set; }
         public DbSet<Quiz> Quiz { get; set; }
+        public DbSet<Story> Story { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options)
