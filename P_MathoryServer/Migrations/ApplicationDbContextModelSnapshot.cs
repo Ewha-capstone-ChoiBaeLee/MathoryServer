@@ -23,11 +23,14 @@ namespace P_MathoryServer.Migrations
 
             modelBuilder.Entity("SharedData.Models.CharacterInformation", b =>
                 {
-                    b.Property<int>("CharacterId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CharacterName")
                         .IsRequired()
@@ -37,18 +40,18 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CharacterId");
+                    b.HasKey("Id");
 
                     b.ToTable("CharacterInformation");
                 });
 
             modelBuilder.Entity("SharedData.Models.Quiz", b =>
                 {
-                    b.Property<int>("Part")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Part"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Answer")
                         .IsRequired()
@@ -64,22 +67,25 @@ namespace P_MathoryServer.Migrations
                     b.Property<double>("Num2")
                         .HasColumnType("float");
 
+                    b.Property<int>("Part")
+                        .HasColumnType("int");
+
                     b.Property<string>("Problem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Part");
+                    b.HasKey("Id");
 
                     b.ToTable("Quiz");
                 });
 
             modelBuilder.Entity("SharedData.Models.Story", b =>
                 {
-                    b.Property<int>("Part")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Part"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Content")
                         .HasColumnType("int");
@@ -88,26 +94,32 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Part")
+                        .HasColumnType("int");
+
                     b.Property<string>("Time")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Part");
+                    b.HasKey("Id");
 
                     b.ToTable("Story");
                 });
 
             modelBuilder.Entity("SharedData.Models.StoryLine", b =>
                 {
-                    b.Property<int>("Num")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Num"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Num")
+                        .HasColumnType("int");
 
                     b.Property<int>("Part")
                         .HasColumnType("int");
@@ -116,7 +128,7 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Num");
+                    b.HasKey("Id");
 
                     b.ToTable("StoryLine");
                 });

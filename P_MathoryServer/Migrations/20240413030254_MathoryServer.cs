@@ -4,7 +4,7 @@
 
 namespace P_MathoryServer.Migrations
 {
-    public partial class P_MathoryServer : Migration
+    public partial class MathoryServer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,22 +12,24 @@ namespace P_MathoryServer.Migrations
                 name: "CharacterInformation",
                 columns: table => new
                 {
-                    CharacterId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CharacterId = table.Column<int>(type: "int", nullable: false),
                     CharacterName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CharacterPersonality = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterInformation", x => x.CharacterId);
+                    table.PrimaryKey("PK_CharacterInformation", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Quiz",
                 columns: table => new
                 {
-                    Part = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Part = table.Column<int>(type: "int", nullable: false),
                     Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Equation = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -36,37 +38,39 @@ namespace P_MathoryServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quiz", x => x.Part);
+                    table.PrimaryKey("PK_Quiz", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Story",
                 columns: table => new
                 {
-                    Part = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Part = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Story", x => x.Part);
+                    table.PrimaryKey("PK_Story", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StoryLine",
                 columns: table => new
                 {
-                    Num = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Num = table.Column<int>(type: "int", nullable: false),
                     Part = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Story = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StoryLine", x => x.Num);
+                    table.PrimaryKey("PK_StoryLine", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

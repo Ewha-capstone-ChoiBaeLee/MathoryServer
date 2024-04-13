@@ -9,9 +9,8 @@ namespace SharedData.Models
 {
     public class StoryLine
     {
-        [Key]
+        public int Id { get; set; }
         public int Num { get; set; }
-
         public int Part { get; set; }
         public string Name { get; set; }
         public string Story {  get; set; }

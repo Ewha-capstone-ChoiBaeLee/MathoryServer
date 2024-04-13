@@ -19,7 +19,7 @@ namespace P_MathoryServer.Controllers
         // CREATE
 
         // READ
-        [HttpGet]
+        /*[HttpGet]
         public List<UserInformation> GetUsersInformation()
         {
             List<UserInformation> results = _context.UserInformation
@@ -37,7 +37,7 @@ namespace P_MathoryServer.Controllers
                 .FirstOrDefault();
 
             return result;
-        }
+        }*/
 
         // UPDATE
 
