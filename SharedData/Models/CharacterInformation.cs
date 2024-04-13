@@ -12,7 +12,6 @@ namespace SharedData.Models
         [Key]
         public int CharacterId { get; set; }
         public string CharacterName { get; set; }
-
-        // (보류) public string CharacterDescription { get; set; }
+        public string CharacterPersonality { get; set; }
     }
 }

@@ -9,7 +9,13 @@ namespace SharedData.Models
     public class StoryLine
     {
 
-        static void Main(string[] args)
+        public int Id { get; set; }
+        public int Num { get; set; }
+        public int Part { get; set; }
+        public string Name { get; set; }
+        public string Story {  get; set; }
+
+        /*static void Main(string[] args)
         {
             // 발단
             var story1 = new Dictionary<string, string>();
@@ -21,7 +27,7 @@ namespace SharedData.Models
             // 전개
             var story2 = new Dictionary<string, string>();
             story2.Add("설명", "동아리 방으로 모여 국어 수업 내용을 함께 공부하기로 한 주인공과 친구들은 책과 노트를 꺼내어 숙제를 시작한다.");
-            story2.Add("주인공", "이 부분을 이해 못 하겠어.제시카, 너 좀 도와줄 수 있을까 ?");
+            story2.Add("주인공", "이 부분을 이해 못 하겠어.제시카, 너 좀 도와줄 수 있을까?");
             story2.Add("제시카", "물론이야! 여기 봐, 이 부분은 이렇게 푸는 거야.");
             story2.Add("리나", "오, 그렇게 하면 되는 거구나! 고마워, 제시카.");
 
@@ -36,6 +42,6 @@ namespace SharedData.Models
             var story4 = new Dictionary<string, string>();
             story4.Add("설명", "서로 도와가며 국어 숙제를 공부하고 푸는 과정에서 주인공과 친구들은 서로의 지식을 나누며 성장한다.");
             story4.Add("설명", "함께 어려운 문제를 푸는 것이 더 즐거운 순간으로 이어지며, 동아리 방은 웃음과 공부의 장소로 가득하게 된다.");
-        }
+        }*/
     }
 }
