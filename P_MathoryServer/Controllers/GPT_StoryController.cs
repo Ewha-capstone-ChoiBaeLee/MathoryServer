@@ -1,6 +1,4 @@
-﻿//(-) read character's personality from DB with ID
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI_API.Completions;
 using OpenAI_API;
@@ -8,9 +6,12 @@ using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.Security.Principal;
 using OpenAI_API.Chat;
-using SharedData.Models;
 using P_MathoryServer.Data;
 using P_MathoryServer.Services;
+using SharedData.Models;
+using System.Runtime.Serialization.Formatters;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Http;
 
 
 namespace P_MathoryServer.Controllers
@@ -20,11 +21,23 @@ namespace P_MathoryServer.Controllers
     public class GPT_StoryController : ControllerBase
     {
         private readonly StoryProcessingService _storyProcessingService;
+        private readonly StoryLineProcessingService _storyLineProcessingService;
         private readonly ApplicationDbContext _context;
-        public GPT_StoryController(StoryProcessingService storyProcessingService, ApplicationDbContext context)
+        private readonly IHttpClientFactory _clientFactory;
+
+        public GPT_StoryController(StoryProcessingService storyProcessingService, StoryLineProcessingService storyLineProcessingService, ApplicationDbContext context, IHttpClientFactory clientFactory)
         {
             _storyProcessingService = storyProcessingService;
+            _storyLineProcessingService = storyLineProcessingService;
             _context = context;
+            _clientFactory = clientFactory;
+        }
+
+        [HttpPost]
+        public IActionResult ExecuteController()
+        {
+            var result = GetStory().Result;
+            return Ok(result);
         }
 
 
@@ -48,15 +61,17 @@ It should be in the form of {character}: {character's dialog} and when writing d
 리나 is introverted and kind.
 You need to write the story taking into account the character's personality.";
 
-            string CS = "주인공 is neutral\n";
+            string charSyst = "주인공 is neutral\n";
             var (prompt, location, clock, friendsID) = Prompts.MakingStoryPrompt();
             //friendsID = {0,1,2}
             //DB characterID starts from 1
             for (var i = 0; i < friendsID.Count; i++)
             {
+                var friend = _context.CharacterInformation.FirstOrDefault(s => s.CharacterId == friendsID[i] + 1);
+                charSyst += (friend.CharacterPersonality + ". ");
 
             }
-
+            charSyst += "You need to write the story taking into account the character's personality.";
 
             var systemMessage = general_system + character_system;
             chat.AppendSystemMessage(systemMessage);
@@ -95,19 +110,28 @@ You need to write the story taking into account the character's personality.";
                 Location = location,
             };
 
-
             _context.Story.Add(introStory);
             _context.Story.Add(developmentStory);
             _context.Story.Add(crisisStory);
             _context.Story.Add(endingStory);
             _context.SaveChanges();
 
+            _storyLineProcessingService.ProcessStoryLine();
+
+            await ExecuteGPTQuizController();
 
             return Ok(new { Prompt = prompt, Location = location, Clock = clock, Intro = intro, Development = development, Crisis = crisis, Ending = ending });
-
         }
 
+        [HttpPost("QuizGPT")]
+        public async Task ExecuteGPTQuizController()
+        {
+            var url = "https://localhost:7039/api/GPT_Quiz/QuizGPT";
+
+            using (var client = _clientFactory.CreateClient())
+            {
+                var response = await client.PostAsync(url, null);
+            }
+        }
     }
-
-
-}
+} 

@@ -1,6 +1,4 @@
-﻿//(-) save to quiz DB
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI_API.Completions;
 using OpenAI_API;
@@ -11,6 +9,8 @@ using OpenAI_API.Chat;
 using SharedData.Models;
 using P_MathoryServer.Data;
 using P_MathoryServer.Services;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using System.Text.RegularExpressions;
 
 namespace P_MathoryServer.Controllers
 {
@@ -64,12 +64,17 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
                                 .FirstOrDefault();
 
             //generate equation
-            var (equation1, subject1) = QuizEquation.Generate();
-            var (equation2, subject2) = QuizEquation.Generate();
-            var (equation3, subject3) = QuizEquation.Generate();
+            var (equation1, subject1, answer1) = QuizEquation.Generate();
+            var (equation2, subject2, answer2) = QuizEquation.Generate();
+            var (equation3, subject3, answer3) = QuizEquation.Generate();
 
             //first question
             var systemMessage1 = general_system + subject1;
+            double firstNum1 = -1; double firstNum2 = -1;
+            if (subject1 == "The mathematics topic is number comparison")
+            {
+                (firstNum1, firstNum2) = numberComparison(equation1);
+            }
             var prompt1 = equation1 + "\n\n" + intro;
             chat1.AppendSystemMessage(systemMessage1);
             chat1.AppendUserInput(prompt1);
@@ -77,6 +82,11 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
 
             //second question
             var systemMessage2 = general_system + subject2;
+            double secondNum1 = -1; double secondNum2 = -1;
+            if (subject2 == "The mathematics topic is number comparison")
+            {
+                (secondNum1, secondNum2) = numberComparison(equation2);
+            }
             var prompt2 = equation2 + "\n\n" + development;
             chat2.AppendSystemMessage(systemMessage2);
             chat2.AppendUserInput(prompt2);
@@ -84,6 +94,11 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
 
             //third question
             var systemMessage3 = general_system + subject3;
+            double thirdNum1 = -1; double thirdNum2 = -1;
+            if (subject3 == "The mathematics topic is number comparison")
+            {
+                (thirdNum1, thirdNum2) = numberComparison(equation3);
+            }
             var prompt3 = equation3 + "\n\n" + crisis;
             chat3.AppendSystemMessage(systemMessage3);
             chat3.AppendUserInput(prompt3);
@@ -96,30 +111,30 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
             {
                 Part = 1,
                 Problem = response1,
-                Answer = "0",
+                Answer = answer1,
                 Equation = equation1,
-                Num1 = 0.0,
-                Num2 = 0.0,
+                Num1 = firstNum1,
+                Num2 = firstNum2,
             };
 
             var problem2 = new Quiz
             {
                 Part = 2,
                 Problem = response2,
-                Answer = "0",
+                Answer = answer2,
                 Equation = equation2,
-                Num1 = 0.0,
-                Num2 = 0.0,
+                Num1 = secondNum1,
+                Num2 = secondNum2,
             };
 
             var problem3 = new Quiz
             {
                 Part = 3,
                 Problem = response3,
-                Answer = "0",
+                Answer = answer3,
                 Equation = equation3,
-                Num1 = 0.0,
-                Num2 = 0.0,
+                Num1 = thirdNum1,
+                Num2 = thirdNum2,
             };
 
             _context.Quiz.Add(problem1);
@@ -127,11 +142,25 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
             _context.Quiz.Add(problem3);
             _context.SaveChanges();
 
-            return Ok(new { P1 = prompt1, R1 = response1, P2 = prompt2, R2 = response2, P3 = prompt3, R3 = response3 });
+            return Ok(new { P1 = prompt1, R1 = response1, A1 = answer1, P2 = prompt2, R2 = response2, A2 = answer2, P3 = prompt3, R3 = response3, A3 = answer3 });
+
 
         }
 
+        private (double, double) numberComparison(string equation)
+        {
+            double num1 = 0, num2 = 0;
+            // Regular expression pattern to match numbers
 
+            string pattern = @"-?\d+(\.\d+)?";
 
+            // Find matches of numbers in the input string
+            MatchCollection matches = Regex.Matches(equation, pattern);
+
+            num1 = double.Parse(matches[0].Value);
+            num2 = double.Parse(matches[1].Value);
+
+            return (num1, num2);
+        }
     }
 }

@@ -7,11 +7,11 @@ namespace P_MathoryServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class QuizController : ControllerBase
     {
         ApplicationDbContext _context;
-
-        public UserController(ApplicationDbContext context)
+        
+        public QuizController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -20,19 +20,19 @@ namespace P_MathoryServer.Controllers
 
         // READ
         [HttpGet]
-        public List<UserInformation> GetUsersInformation()
+        public List<Quiz> GetQuiz()
         {
-            List<UserInformation> results = _context.UserInformation
-                .OrderByDescending(item => item.UserLevel)
+            List<Quiz> results = _context.Quiz
+                .OrderByDescending(item => item.Part)
                 .ToList();
 
             return results;
         }
 
         [HttpGet("{id}")]
-        public UserInformation GetUserInformation(int id)
+        public Quiz GetQuiz(int id)
         {
-            UserInformation result = _context.UserInformation
+            Quiz result = _context.Quiz
                 .Where(item => item.Id == id)
                 .FirstOrDefault();
 

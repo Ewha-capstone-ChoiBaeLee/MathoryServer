@@ -12,14 +12,13 @@ namespace SharedData.Models
         //selected friends = unity input
 
         static Random random = new Random();
-        private static List<int> selectFriends;
+        public static List<int> selectFriends;
 
         static Tuple<string, List<string>, List<string>> SelectingFriends(List<string> friends)
         {
             //Console.WriteLine("원하는 친구를 고르세요: 루카스[0], 마크[1], 소피아[2], 리나[3], 제시카[4]");
             //List<int> selectFriends = Console.ReadLine().Split().Select(int.Parse).ToList();
-
-            selectFriends = new List<int> { 0, 1 };
+            
             List<string> selectedFriends = new List<string>();
 
             foreach (int idx in selectFriends)

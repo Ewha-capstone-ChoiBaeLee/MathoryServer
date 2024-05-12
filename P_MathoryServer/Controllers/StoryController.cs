@@ -19,10 +19,10 @@ namespace P_MathoryServer.Controllers
         // CREATE
 
         // READ
-        /*[HttpGet]
-        public List<StoryLine> GetStoryLine()
+        [HttpGet]
+        public List<Story> GetStory()
         {
-            List<StoryLine> results = _context.StoryLine
+            List<Story> results = _context.Story
                 .OrderBy(item => item.Id)
                 .ToList();
 
@@ -30,18 +30,17 @@ namespace P_MathoryServer.Controllers
         }
 
         [HttpGet("{id}")]
-        public StoryLine GetStoryLine(int id)
+        public Story GetStoryLine(int id)
         {
-            StoryLine result = _context.StoryLine
+            Story result = _context.Story
                 .Where(item => item.Id == id)
                 .FirstOrDefault();
 
             return result;
-        }*/
+        }
 
         // UPDATE
 
         // DELETE
-
     }
 }

@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<StoryProcessingService>();
+builder.Services.AddScoped<StoryLineProcessingService>();
+
+builder.Services.AddHttpClient();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

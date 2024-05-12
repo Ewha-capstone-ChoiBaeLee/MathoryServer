@@ -7,11 +7,11 @@ namespace P_MathoryServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class StoryLineController : ControllerBase
     {
         ApplicationDbContext _context;
 
-        public UserController(ApplicationDbContext context)
+        public StoryLineController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -20,19 +20,19 @@ namespace P_MathoryServer.Controllers
 
         // READ
         [HttpGet]
-        public List<UserInformation> GetUsersInformation()
+        public List<StoryLine> GetStoryLine()
         {
-            List<UserInformation> results = _context.UserInformation
-                .OrderByDescending(item => item.UserLevel)
+            List<StoryLine> results = _context.StoryLine
+                .OrderBy(item => item.Id)
                 .ToList();
 
             return results;
         }
 
         [HttpGet("{id}")]
-        public UserInformation GetUserInformation(int id)
+        public StoryLine GetStoryLine(int id)
         {
-            UserInformation result = _context.UserInformation
+            StoryLine result = _context.StoryLine
                 .Where(item => item.Id == id)
                 .FirstOrDefault();
 
@@ -42,5 +42,6 @@ namespace P_MathoryServer.Controllers
         // UPDATE
 
         // DELETE
+
     }
 }
