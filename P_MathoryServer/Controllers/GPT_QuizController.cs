@@ -51,7 +51,7 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
 
             //read DB splitted story
             var intro = _context.Story
-                                .Where(x=>x.Part==1)
+                                .Where(x => x.Part == 1)
                                 .Select(x => x.Content)
                                 .FirstOrDefault();
             var development = _context.Story
@@ -106,7 +106,6 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
 
             //save to quiz DB
             //Part, Problem, Answer, Equation, Num1, Num2
-
             var problem1 = new Quiz
             {
                 Part = 1,
@@ -143,7 +142,6 @@ You should create it in Korean. The question should be in 2-3 sentences long.";
             _context.SaveChanges();
 
             return Ok(new { P1 = prompt1, R1 = response1, A1 = answer1, P2 = prompt2, R2 = response2, A2 = answer2, P3 = prompt3, R3 = response3, A3 = answer3 });
-
 
         }
 

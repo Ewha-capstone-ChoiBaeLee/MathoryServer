@@ -42,7 +42,57 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterInformation");
+                    b.ToTable("CharacterInformation", (string)null);
+                });
+
+            modelBuilder.Entity("SharedData.Models.Log", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Equation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "Year", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Log", (string)null);
+                });
+
+            modelBuilder.Entity("SharedData.Models.MyPage", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Correct_Questions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Solved_Questions")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "Year", "SubjectId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("MyPage", (string)null);
                 });
 
             modelBuilder.Entity("SharedData.Models.Quiz", b =>
@@ -76,7 +126,30 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Quiz");
+                    b.ToTable("Quiz", (string)null);
+                });
+
+            modelBuilder.Entity("SharedData.Models.Ranking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Max_Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Min_Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ranking_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ranking", (string)null);
                 });
 
             modelBuilder.Entity("SharedData.Models.Story", b =>
@@ -104,7 +177,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Story");
+                    b.ToTable("Story", (string)null);
                 });
 
             modelBuilder.Entity("SharedData.Models.StoryLine", b =>
@@ -131,7 +204,24 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoryLine");
+                    b.ToTable("StoryLine", (string)null);
+                });
+
+            modelBuilder.Entity("SharedData.Models.Subject", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"), 1L, 1);
+
+                    b.Property<string>("Subject_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SubjectId");
+
+                    b.ToTable("Subject", (string)null);
                 });
 
             modelBuilder.Entity("SharedData.Models.UserInformation", b =>
@@ -142,12 +232,9 @@ namespace P_MathoryServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("UserCoin")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("UserLevel")
                         .HasColumnType("int");
@@ -156,9 +243,56 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserPW")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserYear")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("UserInformation");
+                    b.ToTable("UserInformation", (string)null);
+                });
+
+            modelBuilder.Entity("SharedData.Models.Log", b =>
+                {
+                    b.HasOne("SharedData.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SharedData.Models.UserInformation", "UserInformation")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("UserInformation");
+                });
+
+            modelBuilder.Entity("SharedData.Models.MyPage", b =>
+                {
+                    b.HasOne("SharedData.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SharedData.Models.UserInformation", "UserInformation")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("UserInformation");
                 });
 #pragma warning restore 612, 618
         }

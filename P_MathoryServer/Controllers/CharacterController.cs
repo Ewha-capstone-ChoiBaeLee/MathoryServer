@@ -19,7 +19,7 @@ namespace P_MathoryServer.Controllers
         // CREATE
 
         // READ
-        /*[HttpGet]
+        [HttpGet]
         public List<CharacterInformation> GetCharactersInformation()
         {
             List<CharacterInformation> results = _context.CharacterInformation
@@ -37,7 +37,7 @@ namespace P_MathoryServer.Controllers
                 .FirstOrDefault();
 
             return result;
-        }*/
+        }
 
         // UPDATE
 

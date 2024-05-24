@@ -17,6 +17,22 @@ namespace P_MathoryServer.Controllers
         }
 
         // CREATE
+        [HttpPost]
+        public IActionResult AddUserInformation([FromBody] UserInformation newUser)
+        {
+            try
+            {
+                _context.UserInformation.Add(newUser);
+                _context.SaveChanges();
+
+                //return Ok("User information added successfully!");
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to add user information: " + ex.Message);
+            }
+        }
 
         // READ
         [HttpGet]

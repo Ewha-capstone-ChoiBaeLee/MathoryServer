@@ -17,7 +17,10 @@ namespace P_MathoryServer.Controllers
             {
                 Prompts.selectFriends = toggleStatuses;
             }
-
+            else
+            {
+                return Ok("NO!!!");
+            }
             // 응답
             return Ok("Toggle statuses received successfully.");
         }
