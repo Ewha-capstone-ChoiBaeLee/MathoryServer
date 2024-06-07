@@ -11,7 +11,7 @@ using P_MathoryServer.Data;
 namespace P_MathoryServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240512054359_P_MathoryServer")]
+    [Migration("20240604042107_P_MathoryServer")]
     partial class P_MathoryServer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,12 +113,6 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Num1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Num2")
-                        .HasColumnType("float");
-
                     b.Property<int>("Part")
                         .HasColumnType("int");
 
@@ -126,7 +120,12 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Quiz");
                 });
@@ -152,6 +151,52 @@ namespace P_MathoryServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ranking");
+                });
+
+            modelBuilder.Entity("SharedData.Models.StarCount", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("LevelEight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelEleven")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelFive")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelFour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelNine")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelOne")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelSeven")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelSix")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTen")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelThree")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTwelve")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTwo")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("StarCount");
                 });
 
             modelBuilder.Entity("SharedData.Models.Story", b =>
@@ -293,6 +338,29 @@ namespace P_MathoryServer.Migrations
                         .IsRequired();
 
                     b.Navigation("Subject");
+
+                    b.Navigation("UserInformation");
+                });
+
+            modelBuilder.Entity("SharedData.Models.Quiz", b =>
+                {
+                    b.HasOne("SharedData.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SharedData.Models.StarCount", b =>
+                {
+                    b.HasOne("SharedData.Models.UserInformation", "UserInformation")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UserInformation");
                 });

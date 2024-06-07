@@ -45,7 +45,35 @@ namespace P_MathoryServer.Controllers
         }
 
         // UPDATE
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateQuestions([FromBody] QuizData data)
+        {
+            var user = await _context.MyPage
+                .FirstOrDefaultAsync(u => u.UserId == data.UserId && u.Year == data.Year && u.SubjectId == data.SubjectId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Correct_Questions += data.Corrected_Num;
+            user.Solved_Questions += data.Solved_Num;
+
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         // DELETE
+    }
+
+    public class QuizData
+    {
+        public string UserId { get; set; }
+        public int Year { get; set; }
+        public int SubjectId { get; set; }
+        public int Solved_Num { get; set; }
+        public int Corrected_Num { get; set; }
     }
 }

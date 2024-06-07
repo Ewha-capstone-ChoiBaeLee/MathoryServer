@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using P_MathoryServer.Data;
 using SharedData.Models;
+using static P_MathoryServer.Controllers.QuizController;
 
 namespace P_MathoryServer.Controllers
 {
@@ -56,7 +58,33 @@ namespace P_MathoryServer.Controllers
         }
 
         // UPDATE
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateLevel([FromBody] LevelData2 data)
+        {
+            var user = await _context.UserInformation
+                                 .FirstOrDefaultAsync(u => u.UserId == data.UserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if(data.UserLevel < 12)
+            {
+                user.UserLevel += data.Increment;
+                _context.Entry(user).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+
+            return NoContent();
+        }
 
         // DELETE
+    }
+
+    public class LevelData2
+    {
+        public string UserId { get; set; }
+        public int UserLevel { get; set; }
+        public int Increment { get; set; }
     }
 }

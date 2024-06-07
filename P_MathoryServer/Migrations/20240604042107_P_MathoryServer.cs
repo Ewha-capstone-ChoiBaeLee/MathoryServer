@@ -24,24 +24,6 @@ namespace P_MathoryServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Quiz",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Part = table.Column<int>(type: "int", nullable: false),
-                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Equation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Num1 = table.Column<double>(type: "float", nullable: false),
-                    Num2 = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Quiz", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ranking",
                 columns: table => new
                 {
@@ -120,6 +102,29 @@ namespace P_MathoryServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Quiz",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Part = table.Column<int>(type: "int", nullable: false),
+                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Equation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Quiz", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Quiz_Subject_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subject",
+                        principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Log",
                 columns: table => new
                 {
@@ -173,6 +178,35 @@ namespace P_MathoryServer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StarCount",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LevelOne = table.Column<int>(type: "int", nullable: false),
+                    LevelTwo = table.Column<int>(type: "int", nullable: false),
+                    LevelThree = table.Column<int>(type: "int", nullable: false),
+                    LevelFour = table.Column<int>(type: "int", nullable: false),
+                    LevelFive = table.Column<int>(type: "int", nullable: false),
+                    LevelSix = table.Column<int>(type: "int", nullable: false),
+                    LevelSeven = table.Column<int>(type: "int", nullable: false),
+                    LevelEight = table.Column<int>(type: "int", nullable: false),
+                    LevelNine = table.Column<int>(type: "int", nullable: false),
+                    LevelTen = table.Column<int>(type: "int", nullable: false),
+                    LevelEleven = table.Column<int>(type: "int", nullable: false),
+                    LevelTwelve = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StarCount", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_StarCount_UserInformation_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserInformation",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Log_SubjectId",
                 table: "Log",
@@ -181,6 +215,11 @@ namespace P_MathoryServer.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MyPage_SubjectId",
                 table: "MyPage",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quiz_SubjectId",
+                table: "Quiz",
                 column: "SubjectId");
         }
 
@@ -200,6 +239,9 @@ namespace P_MathoryServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ranking");
+
+            migrationBuilder.DropTable(
+                name: "StarCount");
 
             migrationBuilder.DropTable(
                 name: "Story");

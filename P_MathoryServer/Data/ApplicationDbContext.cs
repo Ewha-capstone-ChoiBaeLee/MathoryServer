@@ -14,6 +14,8 @@ namespace P_MathoryServer.Data
         public DbSet<MyPage> MyPage { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Log> Log { get; set; }
+        public DbSet<StarCount> StarCount { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // 복합 기본 키 설정
@@ -21,6 +23,10 @@ namespace P_MathoryServer.Data
                 .HasKey(l => new { l.UserId, l.Year, l.SubjectId });
             modelBuilder.Entity<MyPage>()
                 .HasKey(l => new { l.UserId, l.Year, l.SubjectId });
+            modelBuilder.Entity<StarCount>()
+                .HasKey(s => s.UserId);
+            modelBuilder.Entity<Quiz>()
+               .HasKey(s => s.Id);
 
             // 외래 키 설정
             modelBuilder.Entity<Log>()
@@ -41,6 +47,15 @@ namespace P_MathoryServer.Data
                 .HasOne(l => l.Subject)
                 .WithMany()
                 .HasForeignKey(l => l.SubjectId);
+            modelBuilder.Entity<StarCount>()
+                .HasOne(s => s.UserInformation)
+                .WithMany()
+                .HasForeignKey(s => s.UserId)
+                .HasPrincipalKey(ui => ui.UserId);
+            modelBuilder.Entity<Quiz>()
+                .HasOne(s => s.Subject)
+                .WithMany()
+                .HasForeignKey(s => s.SubjectId);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -42,7 +42,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterInformation", (string)null);
+                    b.ToTable("CharacterInformation");
                 });
 
             modelBuilder.Entity("SharedData.Models.Log", b =>
@@ -68,7 +68,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Log", (string)null);
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("SharedData.Models.MyPage", b =>
@@ -92,7 +92,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("MyPage", (string)null);
+                    b.ToTable("MyPage");
                 });
 
             modelBuilder.Entity("SharedData.Models.Quiz", b =>
@@ -111,12 +111,6 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Num1")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Num2")
-                        .HasColumnType("float");
-
                     b.Property<int>("Part")
                         .HasColumnType("int");
 
@@ -124,9 +118,14 @@ namespace P_MathoryServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Quiz", (string)null);
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Quiz");
                 });
 
             modelBuilder.Entity("SharedData.Models.Ranking", b =>
@@ -149,7 +148,53 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ranking", (string)null);
+                    b.ToTable("Ranking");
+                });
+
+            modelBuilder.Entity("SharedData.Models.StarCount", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("LevelEight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelEleven")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelFive")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelFour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelNine")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelOne")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelSeven")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelSix")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTen")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelThree")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTwelve")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LevelTwo")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("StarCount");
                 });
 
             modelBuilder.Entity("SharedData.Models.Story", b =>
@@ -177,7 +222,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Story", (string)null);
+                    b.ToTable("Story");
                 });
 
             modelBuilder.Entity("SharedData.Models.StoryLine", b =>
@@ -204,7 +249,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoryLine", (string)null);
+                    b.ToTable("StoryLine");
                 });
 
             modelBuilder.Entity("SharedData.Models.Subject", b =>
@@ -221,7 +266,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("SubjectId");
 
-                    b.ToTable("Subject", (string)null);
+                    b.ToTable("Subject");
                 });
 
             modelBuilder.Entity("SharedData.Models.UserInformation", b =>
@@ -252,7 +297,7 @@ namespace P_MathoryServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInformation", (string)null);
+                    b.ToTable("UserInformation");
                 });
 
             modelBuilder.Entity("SharedData.Models.Log", b =>
@@ -291,6 +336,29 @@ namespace P_MathoryServer.Migrations
                         .IsRequired();
 
                     b.Navigation("Subject");
+
+                    b.Navigation("UserInformation");
+                });
+
+            modelBuilder.Entity("SharedData.Models.Quiz", b =>
+                {
+                    b.HasOne("SharedData.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SharedData.Models.StarCount", b =>
+                {
+                    b.HasOne("SharedData.Models.UserInformation", "UserInformation")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UserInformation");
                 });
