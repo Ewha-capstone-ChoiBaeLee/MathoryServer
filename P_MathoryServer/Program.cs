@@ -16,8 +16,8 @@ builder.Services.AddHttpClient();
 //builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //    options.UseSqlServer(connectionString));
 
-// Use the connection string from the environment variable
-var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_AZURE_MYSQL_CONNECTIONSTRING");
+// Use the connection string from the configuration
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))); // Ensure to use the appropriate MySQL server version
 
